@@ -12,3 +12,4 @@ C:\Users\wassl\OneDrive\Pulpit\SLAWOMIR\Kodowanie\Krystyna\KrystynaExceptionHand
 C:\Users\wassl\OneDrive\Pulpit\SLAWOMIR\Kodowanie\Krystyna\KrystynaExceptionHandling\GameDataParserApp\GameDataParserApp\GameDataParserApp\obj\Debug\net7.0\GameDataParserApp.pdb
 C:\Users\wassl\OneDrive\Pulpit\SLAWOMIR\Kodowanie\Krystyna\KrystynaExceptionHandling\GameDataParserApp\GameDataParserApp\GameDataParserApp\obj\Debug\net7.0\GameDataParserApp.genruntimeconfig.cache
 C:\Users\wassl\OneDrive\Pulpit\SLAWOMIR\Kodowanie\Krystyna\KrystynaExceptionHandling\GameDataParserApp\GameDataParserApp\GameDataParserApp\obj\Debug\net7.0\ref\GameDataParserApp.dll
+C:\Users\wassl\OneDrive\Pulpit\SLAWOMIR\Kodowanie\Krystyna\KrystynaExceptionHandling\GameDataParserApp\GameDataParserApp\GameDataParserApp\obj\Debug\net7.0\GameDataParserApp.sourcelink.json

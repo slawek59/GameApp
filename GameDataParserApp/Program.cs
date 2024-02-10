@@ -9,9 +9,8 @@ try
 }
 catch (Exception ex)
 {
-
-    Console.WriteLine(
-		"Sorry! The application has experienced an unexpected error " + 
+	Console.WriteLine(
+		"Sorry! The application has experienced an unexpected error " +
 		"and will have to be closed.");
 	logger.Log(ex);
 }
@@ -23,51 +22,17 @@ public class GamesDataParserApp
 {
 	public void Run()
 	{
-		bool isFileRead = false;
-		string fileContents = default;
-		//var fileContents = default();
-		var fileName = default(string);
-		do
-		{
-			try
-			{
-				Console.WriteLine("Enter the name of the file you want to read:");
-				fileName = Console.ReadLine();
+		string fileName = ReadValidFilePathFromUser();
 
-				fileContents = File.ReadAllText(fileName);
-				isFileRead = true;
-			}
-			catch (ArgumentNullException ex)
-			{
-				Console.WriteLine("The file name cannot be null.");
-			}
-			catch (ArgumentException ex)
-			{
-				Console.WriteLine("The file name cannot be empty.");
-			}
-			catch (FileNotFoundException ex)
-			{
-				Console.WriteLine("The file does not exist.");
-			}
-		}
-		while (!isFileRead);
+		var fileContents = File.ReadAllText(fileName);
+		
+		var videoGames = DeserializeVideoGamesFrom(fileName, fileContents);
+		
+		PrintGames(videoGames);
+	}
 
-		List<VideoGame> videoGames = default;
-		try
-		{
-			videoGames = JsonSerializer.Deserialize<List<VideoGame>>(fileContents);
-		}
-		catch (JsonException ex)
-		{
-			var originalColor = Console.ForegroundColor;
-			Console.ForegroundColor = ConsoleColor.Red;
-			Console.WriteLine($"JSON in the {fileName} was not in the valid format. JSON body: " +
-						fileContents);
-			Console.ForegroundColor = originalColor;
-
-			throw new JsonException($"{ex.Message} The file is{fileName}", ex);
-		}
-
+	private static void PrintGames(List<VideoGame> videoGames)
+	{
 		if (videoGames.Count > 0)
 		{
 			Console.WriteLine();
@@ -81,6 +46,56 @@ public class GamesDataParserApp
 		{
 			Console.WriteLine("No games are present in the input file.");
 		}
+	}
+
+	private static List<VideoGame> DeserializeVideoGamesFrom(
+		string fileName, string fileContents)
+	{
+		try
+		{
+			return JsonSerializer.Deserialize<List<VideoGame>>(fileContents);
+		}
+		catch (JsonException ex)
+		{
+			var originalColor = Console.ForegroundColor;
+			Console.ForegroundColor = ConsoleColor.Red;
+			Console.WriteLine($"JSON in the {fileName} was not in the valid format. JSON body: " +
+						fileContents);
+			Console.ForegroundColor = originalColor;
+
+			throw new JsonException($"{ex.Message} The file is{fileName}", ex);
+		}
+	}
+
+	private static string ReadValidFilePathFromUser()
+	{
+		bool isFilePathValid = false;
+		//string fileContents = default;
+		var fileName = default(string);
+		do
+		{
+			Console.WriteLine("Enter the name of the file you want to read:");
+			fileName = Console.ReadLine();
+
+			if (fileName is null)
+			{
+				Console.WriteLine("The file name cannot be null.");
+			}
+			else if (fileName == string.Empty)
+			{
+				Console.WriteLine("The file name cannot be empty.");
+			}
+			else if (!File.Exists(fileName))
+			{
+				Console.WriteLine("The file does not exist.");
+			}
+			else
+			{
+				isFilePathValid = true;
+			}
+		}
+		while (!isFilePathValid);
+		return fileName;
 	}
 }
 
